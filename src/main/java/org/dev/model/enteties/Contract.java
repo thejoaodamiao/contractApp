@@ -1,5 +1,6 @@
 package org.dev.model.enteties;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +10,7 @@ public class Contract {
     private Date date;
     private Double totalValue;
 
-    private List<Installment> installments;
+    private List<Installment> installments = new ArrayList<>();
 
     public Contract() {
     }
@@ -49,10 +50,10 @@ public class Contract {
     }
 
     public void addInstallment(Installment installment) {
-        this.installments.add(installment);
+        installments.add(installment);
     }
 
     public void removeInstallment(Installment installment) {
-        this.installments.remove(installment);
+        installments.remove(installment);
     }
 }
