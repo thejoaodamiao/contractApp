@@ -19,19 +19,18 @@ public class ContractService {
 
     public void processContract(Contract contract, Integer months){
 
-        Calendar calendar = Calendar.getInstance();
+
 
 
         double amount = contract.getTotalValue()/months;
 
-        for (int i = 1; i < months; i++) {
+        for (int i = 1; i <= months; i++) {
 
             double interest = paymentService.interest(amount,i);
-            double paymentFee = paymentService.paymentFee(amount);
+            double paymentFee = paymentService.paymentFee(amount +  interest );
+            LocalDate dueDate = contract.getDate().plusMonths(i);
 
-            calendar.setTime(contract.getDate());
-            calendar.add(Calendar.MONTH, i);
-            Date dueDate = calendar.getTime();
+
             contract.addInstallment(new Installment(dueDate, amount + interest + paymentFee ));
 
 

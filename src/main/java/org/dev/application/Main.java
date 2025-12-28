@@ -2,25 +2,31 @@ package org.dev.application;
 
 
 import org.dev.model.enteties.Contract;
+import org.dev.model.enteties.Installment;
 import org.dev.model.services.ContractService;
 import org.dev.model.services.PaypalService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args)  {
 
+        Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         System.out.println("Entre os dados do contrato:");
         System.out.print("Numero: ");
         int num = sc.nextInt();
         System.out.print("Data do contrato: ");
-        Date dueDate = sdf.parse(sc.next());
+        LocalDate dueDate =  LocalDate.parse(sc.next(), dtf);
         System.out.print("Valor do contrato: ");
         double totalAmount = sc.nextDouble();
         System.out.print("Entre com o numero de parcelas: ");
@@ -34,8 +40,8 @@ public class Main {
         System.out.println();
         System.out.println("Parcelas: ");
 
-        for(int i = 0; i <= contract.getInstallments().size(); i++){
-            System.out.println(contract.getInstallments().get(i).getDueDate() + " - " +  contract.getInstallments().get(i).getAmount());
+        for(Installment i : contract.getInstallments()){
+            System.out.println(i.getDueDate().format(dtf) + " - " + String.format("%.2f", i.getAmount()));
         }
 
     }
